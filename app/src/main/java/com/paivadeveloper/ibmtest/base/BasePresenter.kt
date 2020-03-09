@@ -1,4 +1,6 @@
 package com.paivadeveloper.ibmtest.base
 
-interface BasePresenter {
+interface BasePresenter<V> {
+    fun attachView(view: V)
+    fun detachView()
 }
