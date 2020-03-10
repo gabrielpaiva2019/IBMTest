@@ -2,6 +2,8 @@ package com.paivadeveloper.ibmtest.ui.login
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -22,9 +24,14 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        configActionbarColor()
         presenter = LoginPresenter()
         initListeners()
         setupEditText()
+    }
+
+    private fun configActionbarColor() {
+        actionBar?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
     }
 
     private fun setupEditText() {
