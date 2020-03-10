@@ -7,6 +7,8 @@ import android.os.Bundle
 import com.paivadeveloper.ibmtest.R
 import com.paivadeveloper.ibmtest.model.UserAccount
 import com.paivadeveloper.ibmtest.util.Constants.Companion.USER_ACCOUNT_KEY
+import kotlinx.android.synthetic.main.activity_transaction.*
+import java.text.NumberFormat
 
 class TransactionActivity : AppCompatActivity() {
 
@@ -17,7 +19,16 @@ class TransactionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_transaction)
 
         getUserAccountInfo()
+        populateAccountInfo()
 
+    }
+
+    private fun populateAccountInfo() {
+        var balanceFormatted = NumberFormat.getCurrencyInstance().format(userAccount.balance)
+
+        textViewCurrentUserName.text = userAccount.name
+        textViewAccountAndAgency.text = (userAccount.agency.toString() + " " + userAccount.bankAccount)
+        textViewAccountBalanceValue.text = balanceFormatted
     }
 
     private fun getUserAccountInfo() {
