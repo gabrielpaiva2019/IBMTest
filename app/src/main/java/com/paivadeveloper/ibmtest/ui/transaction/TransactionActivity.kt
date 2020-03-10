@@ -2,6 +2,7 @@ package com.paivadeveloper.ibmtest.ui.transaction
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.paivadeveloper.ibmtest.R
 import com.paivadeveloper.ibmtest.model.Statement
 import com.paivadeveloper.ibmtest.model.UserAccount
@@ -18,6 +19,7 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
         setContentView(R.layout.activity_transaction)
 
         presenter = TransactionPresenter()
+        presenter.attachView(this)
         getUserAccountInfo()
         populateAccountInfo()
         presenter.getStatementList(userAccount.userId)
@@ -39,7 +41,9 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
     }
 
     override fun populateRecyclerStatements(statementList: MutableList<Statement.StatementItem>) {
-
+        val layoutManager = LinearLayoutManager(this)
+        recyclerViewStatements.layoutManager = layoutManager
+        recyclerViewStatements.adapter = TransactionAdapter(statementList)
     }
 
 }
