@@ -8,6 +8,8 @@ interface TransactionContract {
     }
 
     interface Presenter : BasePresenter<View> {
+        fun getAgencyNumberFormatted(bankAccount: String): String
+        fun getBalanceFormatted(balance: Double): String
 
     }
 }

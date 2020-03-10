@@ -1,7 +1,5 @@
 package com.paivadeveloper.ibmtest.ui.transaction
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.paivadeveloper.ibmtest.R
@@ -19,17 +17,19 @@ class TransactionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
 
+        presenter = TransactionPresenter()
         getUserAccountInfo()
         populateAccountInfo()
-        presenter = TransactionPresenter()
 
     }
 
     private fun populateAccountInfo() {
-        var balanceFormatted = NumberFormat.getCurrencyInstance().format(userAccount.balance)
+        var balanceFormatted = presenter.getBalanceFormatted(userAccount.balance)
+        var agencyNumberFormatted = presenter.getAgencyNumberFormatted(userAccount.agency)
 
         textViewCurrentUserName.text = userAccount.name
-        textViewAccountAndAgency.text = (userAccount.agency.toString() + " " + userAccount.bankAccount)
+        textViewAccountAndAgency.text = getString(R.string.account_info_logged_user, userAccount.bankAccount.toString(),
+            agencyNumberFormatted)
         textViewAccountBalanceValue.text = balanceFormatted
     }
 
