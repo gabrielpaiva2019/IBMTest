@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.paivadeveloper.ibmtest.R
@@ -40,6 +41,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     private fun initListeners() {
         buttonLogin.setOnClickListener {
+            progressBarLogin.visibility = View.VISIBLE
             presenter.validateDataAndLoginUser(
                 editTextUser.text.toString(),
                 editTextPassword.text.toString()
@@ -54,6 +56,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun showErrorMessage(errorMessage: String) {
+        progressBarLogin.visibility = View.GONE
         val snackbar =
             Snackbar.make(constraintLayoutLogin, errorMessage, Snackbar.LENGTH_SHORT)
         snackbar.show()
