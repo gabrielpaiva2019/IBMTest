@@ -12,7 +12,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="@dimen/default_width_0dp"
         android:layout_height="@dimen/default_height_232dp"
-        android:background="#3B49EE"
+        android:background="@color/dark_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -90,13 +90,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewRecentTransactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_18dp"
         android:layout_marginTop="@dimen/default_margin_14dp"
         android:fontFamily="sans-serif"
-        android:text="Recentes"
+        android:text="@string/recents_transactions_label"
         android:textColor="@color/dark_grey"
         android:textSize="@dimen/default_textsize_17sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +109,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRecentTransactions"
         android:paddingBottom="@dimen/default_margin_16dp"
         android:clipToPadding="false"
         tools:listitem="@layout/item_statement" />
