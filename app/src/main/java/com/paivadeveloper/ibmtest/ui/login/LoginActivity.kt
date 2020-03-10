@@ -2,10 +2,10 @@ package com.paivadeveloper.ibmtest.ui.login
 
 import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.paivadeveloper.ibmtest.R
+import com.paivadeveloper.ibmtest.util.MaskUtil
 import com.paivadeveloper.ibmtest.util.SecurityUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,6 +19,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
         presenter = LoginPresenter()
         initListeners()
+        setupEditText()
+    }
+
+    private fun setupEditText() {
+      MaskUtil.format(editTextUser)
     }
 
     private fun initListeners() {
