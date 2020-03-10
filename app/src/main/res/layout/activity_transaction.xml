@@ -100,6 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginBottom="16dp"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false"
         tools:listitem="@layout/item_statement" />
 </androidx.constraintlayout.widget.ConstraintLayout>
