@@ -42,7 +42,8 @@ class LoginPresenter : LoginContract.Presenter {
     }
 
     private fun callLoginService(user: String, password: String) {
-        val call = RetrofitService.getService().getUser(LoginInfo(user, password))
+        val loginInfo = LoginInfo(user, password)
+        val call = RetrofitService.getService().getUser(loginInfo)
 
         call.enqueue(object : Callback<Login> {
             override fun onFailure(call: Call<Login>, t: Throwable) {
@@ -51,8 +52,9 @@ class LoginPresenter : LoginContract.Presenter {
 
             override fun onResponse(
                 call: Call<Login>, response: Response<Login>) {
+                val userAccount = response.body()?.userAccount
                 response.body()?.let {
-                    view.showNextScreenAndSaveUser(user, password)
+                    view.showNextScreenAndSaveUser(loginInfo, userAccount)
 
                 }
             }

@@ -1,10 +1,15 @@
 package com.paivadeveloper.ibmtest.ui.login
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.paivadeveloper.ibmtest.R
+import com.paivadeveloper.ibmtest.model.LoginInfo
+import com.paivadeveloper.ibmtest.model.UserAccount
+import com.paivadeveloper.ibmtest.ui.transaction.TransactionActivity
+import com.paivadeveloper.ibmtest.util.Constants.Companion.USER_ACCOUNT_KEY
 import com.paivadeveloper.ibmtest.util.MaskUtil
 import com.paivadeveloper.ibmtest.util.SecurityUtil
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,13 +52,17 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         snackbar.show()
     }
 
-    override fun showNextScreenAndSaveUser(user: String, password: String) {
+    override fun showNextScreenAndSaveUser(loginInfo: LoginInfo, userAccount: UserAccount?) {
         var sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPreferences.edit()
 
-        editor.putString(KEY_USER, SecurityUtil.encrypt(user))
-        editor.putString(KEY_PASSWORD, SecurityUtil.encrypt(password))
+        editor.putString(KEY_USER, SecurityUtil.encrypt(loginInfo.user))
+        editor.putString(KEY_PASSWORD, SecurityUtil.encrypt(loginInfo.password))
         editor.apply()
+
+        val intent = Intent(this, TransactionActivity::class.java)
+        intent.putExtra(USER_ACCOUNT_KEY, userAccount)
+        startActivity(intent)
     }
 
     override fun getUserSaved() {
