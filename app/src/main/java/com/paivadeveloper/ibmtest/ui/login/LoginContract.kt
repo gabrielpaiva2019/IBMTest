@@ -10,6 +10,7 @@ interface LoginContract {
         fun showErrorMessage(s: String)
         fun showNextScreenAndSaveUser(user: LoginInfo, password: UserAccount?)
         fun getUserSaved()
+        fun clearEditTextsAndHideProgress()
 
     }
 

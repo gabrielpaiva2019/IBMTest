@@ -1,6 +1,7 @@
 package com.paivadeveloper.ibmtest.ui.transaction
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -40,10 +41,13 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
         dialogBuilder.setTitle("Logout")
         dialogBuilder.setMessage("Tem certeza que deseja sair da sua conta?")
         dialogBuilder.setPositiveButton("sim") { _, _ ->
+
             val sharedPreferences =
                 getSharedPreferences(LoginActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE)
             sharedPreferences.edit().clear().apply()
-            this.finish()
+
+            finish()
+            startActivity(Intent(this, LoginActivity::class.java))
         }
         dialogBuilder.setNegativeButton("não") { _, _ ->}
         val dialogLogout: AlertDialog = dialogBuilder.create()

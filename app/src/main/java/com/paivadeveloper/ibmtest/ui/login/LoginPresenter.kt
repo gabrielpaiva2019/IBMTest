@@ -55,6 +55,7 @@ class LoginPresenter : LoginContract.Presenter {
                 val userAccount = response.body()?.userAccount
                 response.body()?.let {
                     view.showNextScreenAndSaveUser(loginInfo, userAccount)
+                    view.clearEditTextsAndHideProgress()
 
                 }
             }
@@ -63,7 +64,7 @@ class LoginPresenter : LoginContract.Presenter {
 
 
     fun containsAlphanumeric(password: String): Boolean {
-        val digit: Pattern = Pattern.compile("[a-zA-Z0-9]+")
+        val digit: Pattern = Pattern.compile("[A-Za-z0-9]*")
         val hasNumberCharacter: Matcher = digit.matcher(password)
         return hasNumberCharacter.find()
     }
@@ -75,7 +76,7 @@ class LoginPresenter : LoginContract.Presenter {
     }
 
     fun containsCapitalLetter(password: String): Boolean {
-        val letter: Pattern = Pattern.compile("[a-zA-z]")
+        val letter: Pattern = Pattern.compile("[A-Z]")
         val hasCapitalLatter: Matcher = letter.matcher(password)
         return hasCapitalLatter.find()
     }

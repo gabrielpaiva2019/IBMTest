@@ -72,6 +72,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
         val intent = Intent(this, TransactionActivity::class.java)
         intent.putExtra(USER_ACCOUNT_KEY, userAccount)
+        finish()
         startActivity(intent)
     }
 
@@ -86,6 +87,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
             editTextUser.setText(SecurityUtil.decrypt(user))
             editTextPassword.setText(SecurityUtil.decrypt(password))
         }
+    }
+
+    override fun clearEditTextsAndHideProgress() {
+        editTextUser.text?.clear()
+        editTextPassword.text?.clear()
+        progressBarLogin.visibility = View.GONE
     }
 
     companion object{
