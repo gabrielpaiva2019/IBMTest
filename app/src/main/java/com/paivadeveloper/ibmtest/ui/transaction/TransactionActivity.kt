@@ -1,8 +1,8 @@
 package com.paivadeveloper.ibmtest.ui.transaction
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.paivadeveloper.ibmtest.R
@@ -32,13 +32,23 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
     }
 
     private fun initListeners() {
-        imageViewLogout.setOnClickListener { clearSharedPrefAndLogout() }
+        imageViewLogout.setOnClickListener { showDialog() }
     }
 
-    private fun clearSharedPrefAndLogout() {
-        val sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        sharedPreferences.edit().clear().apply()
-        this.finish()
+    private fun showDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setTitle("Logout")
+        dialogBuilder.setMessage("Tem certeza que deseja sair da sua conta?")
+        dialogBuilder.setPositiveButton("sim") { _, _ ->
+            val sharedPreferences =
+                getSharedPreferences(LoginActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            sharedPreferences.edit().clear().apply()
+            this.finish()
+        }
+        dialogBuilder.setNegativeButton("não") { _, _ ->}
+        val dialogLogout: AlertDialog = dialogBuilder.create()
+        dialogLogout.show()
+
     }
 
     private fun populateAccountInfo() {
@@ -48,7 +58,8 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
         textViewCurrentUserName.text = userAccount.name
         textViewAccountAndAgency.text = getString(
             R.string.account_info_logged_user, userAccount.bankAccount.toString(),
-            agencyNumberFormatted)
+            agencyNumberFormatted
+        )
         textViewAccountBalanceValue.text = balanceFormatted
     }
 
