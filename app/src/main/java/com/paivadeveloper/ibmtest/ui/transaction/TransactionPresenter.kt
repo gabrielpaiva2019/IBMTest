@@ -16,10 +16,9 @@ class TransactionPresenter : TransactionContract.Presenter {
     }
 
     override fun getAgencyNumberFormatted(bankAccount: String): String {
-        val bankAccountString = bankAccount.toString()
-        return bankAccountString.substring(0, 2)+"."+
-                bankAccountString.substring(2, bankAccountString.length-1)+"-"+
-                bankAccountString.substring(bankAccountString.length-1, bankAccountString.length)
+        return bankAccount.substring(0, 2)+"."+
+                bankAccount.substring(2, bankAccount.length-1)+"-"+
+                bankAccount.substring(bankAccount.length-1, bankAccount.length)
     }
 
     override fun getBalanceFormatted(balance: Double): String {
