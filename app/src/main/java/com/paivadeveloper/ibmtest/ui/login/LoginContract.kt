@@ -9,5 +9,6 @@ interface LoginContract {
     }
 
     interface Presenter : BasePresenter<View> {
+        fun validateDataAndLoginUser(user: String, password: String)
     }
 }
