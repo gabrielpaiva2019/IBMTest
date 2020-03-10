@@ -2,6 +2,7 @@ package com.paivadeveloper.ibmtest.ui.transaction
 
 import com.paivadeveloper.ibmtest.model.Statement
 import com.paivadeveloper.ibmtest.services.RetrofitService
+import com.paivadeveloper.ibmtest.util.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,36 +18,44 @@ class TransactionPresenter : TransactionContract.Presenter {
     }
 
     override fun detachView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.view = null!!
     }
 
     override fun getAgencyNumberFormatted(bankAccount: String): String {
-        return bankAccount.substring(0, 2)+"."+
-                bankAccount.substring(2, bankAccount.length-1)+"-"+
-                bankAccount.substring(bankAccount.length-1, bankAccount.length)
+        return bankAccount.substring(0, 2) + "." +
+                bankAccount.substring(2, bankAccount.length - 1) + "-" +
+                bankAccount.substring(bankAccount.length - 1, bankAccount.length)
     }
 
     override fun getBalanceFormatted(balance: Double): String {
-       return NumberFormat.getCurrencyInstance().format(balance)
+        return NumberFormat.getCurrencyInstance().format(balance)
     }
 
     override fun getStatementList(userId: Int) {
         val call = RetrofitService.getService().getStatements(userId)
 
-        call.enqueue(object : Callback<Statement.StatementList> {
-            override fun onFailure(call: Call<Statement.StatementList>, t: Throwable) {
-
-            }
-
-            override fun onResponse(
-                call: Call<Statement.StatementList>, response: Response<Statement.StatementList>) {
-                val statementList = response.body()?.statementList
-
-                response.body()?.let {
-                    view.populateRecyclerStatements(statementList!!)
+        if (NetworkUtil().hasInternetConnection()) {
+            call.enqueue(object : Callback<Statement.StatementList> {
+                override fun onFailure(call: Call<Statement.StatementList>, t: Throwable) {
+                    view.showErrorMessage(t.localizedMessage)
                 }
-            }
-        })
 
+                override fun onResponse(
+                    call: Call<Statement.StatementList>, response: Response<Statement.StatementList>
+                ) {
+                    val statementList = response.body()?.statementList
+
+                    response.body()?.let {
+                        view.populateRecyclerStatements(statementList!!)
+                    }
+                }
+            })
+        } else {
+            view.showErrorMessage(ERROR_NO_INTERNET)
+        }
+    }
+
+    companion object {
+        const val ERROR_NO_INTERNET = "Verifique sua conexão com a internet"
     }
 }

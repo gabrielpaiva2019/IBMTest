@@ -1,11 +1,14 @@
 package com.paivadeveloper.ibmtest.ui.transaction
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.paivadeveloper.ibmtest.R
 import com.paivadeveloper.ibmtest.model.Statement
 import com.paivadeveloper.ibmtest.model.UserAccount
@@ -38,9 +41,9 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
 
     private fun showDialog() {
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("Logout")
-        dialogBuilder.setMessage("Tem certeza que deseja sair da sua conta?")
-        dialogBuilder.setPositiveButton("sim") { _, _ ->
+        dialogBuilder.setTitle(getString(R.string.dialog_logout_title))
+        dialogBuilder.setMessage(getString(R.string.dialog_logout_message))
+        dialogBuilder.setPositiveButton(getString(R.string.dialog_logout_yes)) { _, _ ->
 
             val sharedPreferences =
                 getSharedPreferences(LoginActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -49,7 +52,7 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
             finish()
             startActivity(Intent(this, LoginActivity::class.java))
         }
-        dialogBuilder.setNegativeButton("não") { _, _ ->}
+        dialogBuilder.setNegativeButton(getString(R.string.dialog_logout_no)) { _, _ -> }
         val dialogLogout: AlertDialog = dialogBuilder.create()
         dialogLogout.show()
 
@@ -75,6 +78,14 @@ class TransactionActivity : AppCompatActivity(), TransactionContract.View {
         val layoutManager = LinearLayoutManager(this)
         recyclerViewStatements.layoutManager = layoutManager
         recyclerViewStatements.adapter = TransactionAdapter(statementList)
+    }
+
+    override fun showErrorMessage(errorMessage: String) {
+        val snack = Snackbar.make(constraintLayoutTransaction, errorMessage, Snackbar.LENGTH_LONG)
+        snack.setAction("tentar conexão") {
+            presenter.getStatementList(userAccount.userId)
+        }
+        snack.show()
     }
 
 }

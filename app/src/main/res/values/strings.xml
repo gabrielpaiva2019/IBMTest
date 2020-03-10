@@ -7,4 +7,8 @@
     <string name="account_info_label">conta</string>
     <string name="account_info_balance">saldo</string>
     <string name="recents_transactions_label">Recentes</string>
+    <string name="dialog_logout_title">Logout</string>
+    <string name="dialog_logout_message">Tem certeza que deseja sair da sua conta?</string>
+    <string name="dialog_logout_yes">sim</string>
+    <string name="dialog_logout_no">não</string>
 </resources>

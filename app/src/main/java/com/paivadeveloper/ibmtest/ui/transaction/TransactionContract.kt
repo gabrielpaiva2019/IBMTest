@@ -6,6 +6,7 @@ import com.paivadeveloper.ibmtest.model.Statement
 interface TransactionContract {
     interface View {
         fun populateRecyclerStatements(statementList: MutableList<Statement.StatementItem>)
+        fun showErrorMessage(errorNoInternet: String)
 
     }
 
