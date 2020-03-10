@@ -1,14 +1,14 @@
 package com.paivadeveloper.ibmtest.ui.transaction
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.paivadeveloper.ibmtest.R
+import com.paivadeveloper.ibmtest.model.Statement
 import com.paivadeveloper.ibmtest.model.UserAccount
 import com.paivadeveloper.ibmtest.util.Constants.Companion.USER_ACCOUNT_KEY
 import kotlinx.android.synthetic.main.activity_transaction.*
-import java.text.NumberFormat
 
-class TransactionActivity : AppCompatActivity() {
+class TransactionActivity : AppCompatActivity(), TransactionContract.View {
 
     lateinit var userAccount: UserAccount
     lateinit var presenter: TransactionPresenter
@@ -20,6 +20,7 @@ class TransactionActivity : AppCompatActivity() {
         presenter = TransactionPresenter()
         getUserAccountInfo()
         populateAccountInfo()
+        presenter.getStatementList(userAccount.userId)
 
     }
 
@@ -35,6 +36,10 @@ class TransactionActivity : AppCompatActivity() {
 
     private fun getUserAccountInfo() {
         userAccount = intent.extras?.getSerializable(USER_ACCOUNT_KEY) as UserAccount
+    }
+
+    override fun populateRecyclerStatements(statementList: MutableList<Statement.StatementItem>) {
+
     }
 
 }
