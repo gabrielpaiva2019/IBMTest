@@ -3,6 +3,7 @@ package com.paivadeveloper.ibmtest.ui.login
 import com.paivadeveloper.ibmtest.model.Login
 import com.paivadeveloper.ibmtest.model.LoginInfo
 import com.paivadeveloper.ibmtest.services.RetrofitService
+import com.paivadeveloper.ibmtest.util.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,19 +23,24 @@ class LoginPresenter : LoginContract.Presenter {
     }
 
     override fun validateDataAndLoginUser(user: String, password: String) {
-        if (!user.isNullOrEmpty() && !password.isNullOrEmpty()) {
-            if (!containsCapitalLetter(password)) {
-                view.showErrorMessage(NO_CAPITAL_LETTER_ERROR)
-            } else if (!containsAlphanumeric(password)) {
-                view.showErrorMessage(NO_ALPHANUMERIC_ERROR)
-            } else if (!containsSpecialCharacter(password)) {
-                view.showErrorMessage(NO_SPECIAL_CHARACTER_ERROR)
+        if (NetworkUtil().hasInternetConnection()){
+            if (!user.isNullOrEmpty() && !password.isNullOrEmpty()) {
+                if (!containsCapitalLetter(password)) {
+                    view.showErrorMessage(NO_CAPITAL_LETTER_ERROR)
+                } else if (!containsAlphanumeric(password)) {
+                    view.showErrorMessage(NO_ALPHANUMERIC_ERROR)
+                } else if (!containsSpecialCharacter(password)) {
+                    view.showErrorMessage(NO_SPECIAL_CHARACTER_ERROR)
+                } else {
+                    callLoginService(user, password)
+                }
             } else {
-                callLoginService(user, password)
+                view.showErrorMessage(EMPTY_OR_NULL_ERROR)
             }
-        } else {
-            view.showErrorMessage(EMPTY_OR_NULL_ERROR)
+        }else{
+            view.showErrorMessage(ERROR_NO_INTERNET)
         }
+
     }
 
     override fun start() {
@@ -84,9 +90,9 @@ class LoginPresenter : LoginContract.Presenter {
     companion object {
         private const val NO_CAPITAL_LETTER_ERROR = "A senha deve ter ao menos uma letra maiuscula"
         private const val NO_ALPHANUMERIC_ERROR = "A senha deve combinar letras e números"
-        private const val NO_SPECIAL_CHARACTER_ERROR =
-            "A senha deve ter ao menos um caractere especial"
+        private const val NO_SPECIAL_CHARACTER_ERROR = "A senha deve ter ao menos um caractere especial"
         private const val EMPTY_OR_NULL_ERROR = "Os campos não podem estar vazios"
+        private const val ERROR_NO_INTERNET = "Verifique sua conexão com a internet"
     }
 
 
