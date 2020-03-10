@@ -50,9 +50,8 @@ class LoginPresenter : LoginContract.Presenter {
             }
 
             override fun onResponse(
-                call: Call<Login>, response: Response<Login>
-            ) {
-                response.body()?.let { response ->
+                call: Call<Login>, response: Response<Login>) {
+                response.body()?.let {
                     view.showNextScreenAndSaveUser(user, password)
 
                 }
