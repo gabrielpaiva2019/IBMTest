@@ -27,7 +27,7 @@
         android:layout_marginStart="@dimen/default_margin_17dp"
         android:layout_marginTop="@dimen/default_margin_105dp"
         android:layout_marginEnd="@dimen/default_margin_16dp"
-        android:hint="User"
+        android:hint="@string/edit_user_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -46,7 +46,7 @@
         android:layout_marginStart="@dimen/default_margin_17dp"
         android:layout_marginTop="@dimen/default_margin_21dp"
         android:layout_marginEnd="@dimen/default_margin_16dp"
-        android:hint="Password"
+        android:hint="@string/edit_password_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUser">
@@ -67,7 +67,7 @@
         android:layout_height="@dimen/default_height_60dp"
         android:layout_marginBottom="@dimen/default_margin_33dp"
         android:backgroundTint="#3B48EE"
-        android:text="Login"
+        android:text="@string/login_button_text"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/default_textsize_16sp"

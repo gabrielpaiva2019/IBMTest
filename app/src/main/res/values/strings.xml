@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">IBMTest</string>
     <string name="account_info_logged_user">%1$s / %2$s</string>
+    <string name="edit_user_hint">User</string>
+    <string name="edit_password_hint">Password</string>
+    <string name="login_button_text">Login</string>
 </resources>
