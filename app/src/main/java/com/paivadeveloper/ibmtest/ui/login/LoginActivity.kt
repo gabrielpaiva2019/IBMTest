@@ -1,11 +1,13 @@
 package com.paivadeveloper.ibmtest.ui.login
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.paivadeveloper.ibmtest.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-class LoginActivity : AppCompatActivity() {
+
+class LoginActivity : AppCompatActivity(), LoginContract.View {
     lateinit var presenter: LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,5 +24,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         presenter = LoginPresenter()
+        presenter.attachView(this)
+    }
+
+    override fun showErrorMessage(errorMessage: String) {
+        val snackbar =
+            Snackbar.make(constraintLayoutLogin, errorMessage, Snackbar.LENGTH_SHORT)
+        snackbar.show()
     }
 }
