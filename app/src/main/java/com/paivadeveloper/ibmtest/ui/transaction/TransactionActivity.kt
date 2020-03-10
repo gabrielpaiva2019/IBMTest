@@ -13,6 +13,7 @@ import java.text.NumberFormat
 class TransactionActivity : AppCompatActivity() {
 
     lateinit var userAccount: UserAccount
+    lateinit var presenter: TransactionPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,7 @@ class TransactionActivity : AppCompatActivity() {
 
         getUserAccountInfo()
         populateAccountInfo()
+        presenter = TransactionPresenter()
 
     }
 
@@ -34,4 +36,5 @@ class TransactionActivity : AppCompatActivity() {
     private fun getUserAccountInfo() {
         userAccount = intent.extras?.getSerializable(USER_ACCOUNT_KEY) as UserAccount
     }
+
 }
