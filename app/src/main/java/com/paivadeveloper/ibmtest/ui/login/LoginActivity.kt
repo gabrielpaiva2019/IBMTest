@@ -101,5 +101,4 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         const val KEY_PASSWORD = "password"
         const val DEFAULT_VALUE_EMPTY = ""
     }
-
 }

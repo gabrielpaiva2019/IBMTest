@@ -11,5 +11,4 @@ class DateUtil {
         val formatDateToString = SimpleDateFormat("dd/MM/yyyy")
         return formatDateToString.format(date)
     }
-
 }

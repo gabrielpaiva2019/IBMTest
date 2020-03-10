@@ -62,7 +62,6 @@ class LoginPresenter : LoginContract.Presenter {
                 response.body()?.let {
                     view.showNextScreenAndSaveUser(loginInfo, userAccount)
                     view.clearEditTextsAndHideProgress()
-
                 }
             }
         })
@@ -94,6 +93,4 @@ class LoginPresenter : LoginContract.Presenter {
         private const val EMPTY_OR_NULL_ERROR = "Os campos não podem estar vazios"
         private const val ERROR_NO_INTERNET = "Verifique sua conexão com a internet"
     }
-
-
 }

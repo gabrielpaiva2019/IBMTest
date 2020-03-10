@@ -17,7 +17,6 @@ class MaskUtil {
                 .replace("*", "")
         }
 
-
         fun format(editText : EditText) : TextWatcher {
 
             val textWatcher : TextWatcher = object : TextWatcher {
@@ -62,16 +61,12 @@ class MaskUtil {
                         editText.setText(cpfWithMask)
                         editText.setSelection(cpfWithMask.length)
                     }
-
                 }
 
                 override fun afterTextChanged(editable: Editable) {
                     //doNothing
                 }
             }
-
-
-
             editText.addTextChangedListener(textWatcher)
             return textWatcher
         }

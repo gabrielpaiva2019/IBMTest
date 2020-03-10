@@ -35,12 +35,10 @@ class TransactionAdapter(private var listStatements: MutableList<Statement.State
         holder.textViewTransactionType.text = statement.title
     }
 
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var textViewTransactionType = itemView.textViewTransactionType
         var textViewTransactionDescription = itemView.textViewTransactionDescription
         var textViewTransactionValue = itemView.textViewTransactionValue
         var textViewTransactionDate = itemView.textViewTransactionDate
-
     }
 }

@@ -11,7 +11,6 @@ interface LoginContract {
         fun showNextScreenAndSaveUser(user: LoginInfo, password: UserAccount?)
         fun getUserSaved()
         fun clearEditTextsAndHideProgress()
-
     }
 
     interface Presenter : BasePresenter<View> {

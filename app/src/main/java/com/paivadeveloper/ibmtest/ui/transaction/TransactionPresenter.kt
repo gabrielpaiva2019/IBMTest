@@ -9,9 +9,7 @@ import retrofit2.Response
 import java.text.NumberFormat
 
 class TransactionPresenter : TransactionContract.Presenter {
-
     lateinit var view: TransactionContract.View
-
 
     override fun attachView(view: TransactionContract.View) {
         this.view = view
