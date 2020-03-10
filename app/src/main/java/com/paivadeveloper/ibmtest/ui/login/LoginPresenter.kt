@@ -22,19 +22,23 @@ class LoginPresenter : LoginContract.Presenter {
     }
 
     override fun validateDataAndLoginUser(user: String, password: String) {
-        if (!user.isNullOrEmpty() && !password.isNullOrEmpty()){
+        if (!user.isNullOrEmpty() && !password.isNullOrEmpty()) {
             if (!containsCapitalLetter(password)) {
                 view.showErrorMessage(NO_CAPITAL_LETTER_ERROR)
-            }else if (!containsAlphanumeric(password)){
+            } else if (!containsAlphanumeric(password)) {
                 view.showErrorMessage(NO_ALPHANUMERIC_ERROR)
-            }else if (!containsSpecialCharacter(password)){
+            } else if (!containsSpecialCharacter(password)) {
                 view.showErrorMessage(NO_SPECIAL_CHARACTER_ERROR)
-            }else{
+            } else {
                 callLoginService(user, password)
             }
-        }else{
+        } else {
             view.showErrorMessage(EMPTY_OR_NULL_ERROR)
         }
+    }
+
+    override fun start() {
+        view.getUserSaved()
     }
 
     private fun callLoginService(user: String, password: String) {
@@ -44,22 +48,20 @@ class LoginPresenter : LoginContract.Presenter {
             override fun onFailure(call: Call<Login>, t: Throwable) {
 
             }
+
             override fun onResponse(
-                call: Call<Login>, response: Response<Login>) {
+                call: Call<Login>, response: Response<Login>
+            ) {
                 response.body()?.let { response ->
+                    view.showNextScreenAndSaveUser(user, password)
 
-                    if (response.error.code == 0) {
-
-                    } else {
-
-                    }
                 }
             }
         })
     }
 
 
-    fun containsAlphanumeric(password: String): Boolean{
+    fun containsAlphanumeric(password: String): Boolean {
         val digit: Pattern = Pattern.compile("[a-zA-Z0-9]+")
         val hasNumberCharacter: Matcher = digit.matcher(password)
         return hasNumberCharacter.find()
@@ -77,10 +79,11 @@ class LoginPresenter : LoginContract.Presenter {
         return hasCapitalLatter.find()
     }
 
-    companion object{
+    companion object {
         private const val NO_CAPITAL_LETTER_ERROR = "A senha deve ter ao menos uma letra maiuscula"
         private const val NO_ALPHANUMERIC_ERROR = "A senha deve combinar letras e números"
-        private const val NO_SPECIAL_CHARACTER_ERROR = "A senha deve ter ao menos um caractere especial"
+        private const val NO_SPECIAL_CHARACTER_ERROR =
+            "A senha deve ter ao menos um caractere especial"
         private const val EMPTY_OR_NULL_ERROR = "Os campos não podem estar vazios"
     }
 
