@@ -47,7 +47,7 @@ class LoginPresenter : LoginContract.Presenter {
         view.getUserSaved()
     }
 
-    private fun callLoginService(user: String, password: String) {
+ fun callLoginService(user: String, password: String) {
         val loginInfo = LoginInfo(user, password)
         val call = RetrofitService.getService().getUser(loginInfo)
 
@@ -70,7 +70,7 @@ class LoginPresenter : LoginContract.Presenter {
 
 
     fun containsAlphanumeric(password: String): Boolean {
-        val digit: Pattern = Pattern.compile("[A-Za-z0-9]*")
+        val digit: Pattern = Pattern.compile("^[a-zA-Z0-9]")
         val hasNumberCharacter: Matcher = digit.matcher(password)
         return hasNumberCharacter.find()
     }
