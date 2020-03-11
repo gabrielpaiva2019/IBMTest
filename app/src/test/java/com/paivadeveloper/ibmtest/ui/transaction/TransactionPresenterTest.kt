@@ -1,11 +1,7 @@
 package com.paivadeveloper.ibmtest.ui.transaction
 
-import com.paivadeveloper.ibmtest.ui.login.LoginActivity
-import com.paivadeveloper.ibmtest.ui.login.LoginContract
-import com.paivadeveloper.ibmtest.ui.login.LoginPresenter
 import io.mockk.MockKAnnotations
 import io.mockk.spyk
-import junit.framework.TestCase
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -23,11 +19,18 @@ class TransactionPresenterTest {
 
     @Test
     fun testGetAgencyNumberFormatted() {
-        Assert.assertEquals(presenter.getAgencyNumberFormatted("012314564"), "01.231456-4")
+        Assert.assertEquals(presenter.getAgencyNumberFormatted(AGENCY_NOT_FORMATTED), AGENCY_FORMATTED)
     }
 
     @Test
     fun testGetBalanceFormatted() {
-        Assert.assertEquals(presenter.getBalanceFormatted(200.0), "R\$ 200,00")
+        Assert.assertEquals(presenter.getBalanceFormatted(BALANCE_NOT_FORMATTED), BALANCE_FORMATED)
+    }
+
+    companion object{
+        const val AGENCY_NOT_FORMATTED = "012314564"
+        const val AGENCY_FORMATTED = "01.231456-4"
+        const val BALANCE_NOT_FORMATTED = 200.0
+        const val BALANCE_FORMATED = "R$ 200,00"
     }
 }

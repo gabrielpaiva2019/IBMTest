@@ -1,7 +1,9 @@
 package com.paivadeveloper.ibmtest.ui.login
 
-import com.paivadeveloper.ibmtest.util.NetworkUtil
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.spyk
+import io.mockk.verify
 import junit.framework.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -17,42 +19,42 @@ class LoginPresenterTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true, relaxUnitFun = true)
-        presenter.view = view
+        presenter.attachView(view)
     }
 
     @Test
     fun testValidateContainsSpecialCharacter() {
-        assertTrue(presenter.containsSpecialCharacter("270996bieL$"))
+        assertTrue(presenter.containsSpecialCharacter(PASSWORD_VALID))
     }
 
     @Test
     fun testNotContinsSpecialCharacter() {
-        assertFalse(presenter.containsSpecialCharacter("aaaa"))
+        assertFalse(presenter.containsSpecialCharacter(PASSWORD_WITHOUT_SPECIAL_CHARACTER))
     }
 
     @Test
     fun testValidateContainsCapitalLetter() {
-        assertTrue(presenter.containsCapitalLetter("270996bieL$"))
+        assertTrue(presenter.containsCapitalLetter(PASSWORD_VALID))
     }
 
     @Test
     fun testNotContainsCapitalLetter() {
-        assertFalse(presenter.containsCapitalLetter("aaa"))
+        assertFalse(presenter.containsCapitalLetter(PASSWORD_WITHOUT_CAPITAL_LETTER))
     }
 
     @Test
     fun testContainsAlphaNumeric() {
-        assertTrue(presenter.containsAlphanumeric("270996bieL$"))
+        assertTrue(presenter.containsAlphanumeric(PASSWORD_VALID))
     }
 
     @Test
     fun testNotContainsAlphaNumeric() {
-        assertFalse(presenter.containsAlphanumeric("$$$$$$$"))
+        assertFalse(presenter.containsAlphanumeric(PASSWORD_WITHOUT_ALPHANUMERIC))
     }
 
     @Test
     fun testValidateDataAndLoginUser() {
-        presenter.validateDataAndLoginUser("cgpaiva", "270996bieL$")
+        presenter.validateDataAndLoginUser(USER, PASSWORD_VALID)
 
         verify { presenter.callLoginService(any(), any()) }
     }
@@ -61,7 +63,7 @@ class LoginPresenterTest {
     fun testValidateDataAndLoginUserWithEmptyUserAndPassword() {
         every { view.showErrorMessage(any())} answers { nothing }
 
-        presenter.validateDataAndLoginUser("", "")
+        presenter.validateDataAndLoginUser(EMPTY_STRING, EMPTY_STRING)
 
         verify { view.showErrorMessage(any()) }
     }
@@ -70,7 +72,7 @@ class LoginPresenterTest {
     fun testValidateDataAndLoginUserWithErrorPasswordNoContainsCapitalLetter() {
         every { view.showErrorMessage(any())} answers { nothing }
 
-        presenter.validateDataAndLoginUser("cganasp", "aaa$12")
+        presenter.validateDataAndLoginUser(USER, PASSWORD_WITHOUT_CAPITAL_LETTER)
 
         verify { view.showErrorMessage(any()) }
     }
@@ -79,7 +81,7 @@ class LoginPresenterTest {
     fun testValidateDataAndLoginUserWithErrorPasswordNoContainsSpecialCharacter() {
         every { view.showErrorMessage(any())} answers { nothing }
 
-        presenter.validateDataAndLoginUser("cganasp", "aaaAA12")
+        presenter.validateDataAndLoginUser(USER, PASSWORD_WITHOUT_SPECIAL_CHARACTER)
 
         verify { view.showErrorMessage(any()) }
     }
@@ -88,8 +90,19 @@ class LoginPresenterTest {
     fun testValidateDataAndLoginUserWithErrorPasswordNoContainsAlphanumeric() {
         every { view.showErrorMessage(any())} answers { nothing }
 
-        presenter.validateDataAndLoginUser("cganasp", "$$$$+Aaaaassds2")
+        presenter.validateDataAndLoginUser(USER, PASSWORD_WITHOUT_ALPHANUMERIC)
 
         verify { view.showErrorMessage(any()) }
+    }
+
+
+    companion object{
+        const val PASSWORD_VALID = "270996bieL$"
+        const val USER = "cganasp"
+        const val PASSWORD_WITHOUT_SPECIAL_CHARACTER = "aaaAA12"
+        const val PASSWORD_WITHOUT_ALPHANUMERIC = "$$$$+Aaaaassds2"
+        const val PASSWORD_WITHOUT_CAPITAL_LETTER = "aaa$12"
+        const val EMPTY_STRING = ""
+
     }
 }

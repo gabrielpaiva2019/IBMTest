@@ -19,10 +19,10 @@ class TransactionPresenter : TransactionContract.Presenter {
         this.view = null!!
     }
 
-    override fun getAgencyNumberFormatted(bankAccount: String): String {
-        return bankAccount.substring(0, 2) + "." +
-                bankAccount.substring(2, bankAccount.length - 1) + "-" +
-                bankAccount.substring(bankAccount.length - 1, bankAccount.length)
+    override fun getAgencyNumberFormatted(agency: String): String {
+        return agency.substring(0, 2) + "." +
+                agency.substring(2, agency.length - 1) + "-" +
+                agency.substring(agency.length - 1, agency.length)
     }
 
     override fun getBalanceFormatted(balance: Double): String {
